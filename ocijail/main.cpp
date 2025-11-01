@@ -138,7 +138,7 @@ runtime_state::locked_state runtime_state::lock() {
 
 void runtime_state::check_status() {
     if (state_["status"] == "created" || state_["status"] == "running") {
-        if (::kill(state_["pid"], 0) < 0 && errno == ESRCH) {
+        if (::getsid(state_["pid"]) < 0 && errno == ESRCH) {
             state_["status"] = "stopped";
             save();
         }
