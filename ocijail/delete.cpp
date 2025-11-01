@@ -65,7 +65,9 @@ void delete_::run() {
         std::stringstream ss;
         ss << "delete: container not in \"stopped\" or \"created\" state "
               "(currently "
-           << state["status"] << ")";
+           << state["status"] << ")"
+          << ", pid=" << (state.contains("pid") ? std::to_string(int(state["pid"])) : "none")
+           << ", jid=" << (state.contains("jid") ? std::to_string(int(state["jid"])) : "none");
         throw std::runtime_error(ss.str());
     }
 
